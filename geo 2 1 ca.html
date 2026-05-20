@@ -1,0 +1,288 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!doctype html>
+<html lang="fr">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>QCM -- Roches sédimentaires</title>
+
+<style>
+body{
+  font-family:Arial;
+  background:#eef5ff;
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+h1,h2{text-align:center;color:#1a4fa3;}
+.page-garde{
+  background:#fff;
+  border:2px solid #1a4fa3;
+  border-radius:15px;
+  padding:40px;
+  text-align:center;
+}
+.coordonnees input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+fieldset{
+  background:#fff;
+  margin:15px 0;
+  padding:15px;
+  border-radius:10px;
+}
+.indice{
+  font-size:0.9em;
+  color:#555;
+  background:#f0f4ff;
+  padding:8px;
+  border-left:4px solid #1a4fa3;
+  margin-bottom:10px;
+}
+.btn{
+  background:#1a4fa3;
+  color:white;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+}
+.explain{
+  background:#eef3ff;
+  margin:10px 0;
+  padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-garde" id="pageGarde">
+<h1>🌍 QCM Géologie</h1>
+<p>Nom : <input id="nom"></p>
+<p>Prénom : <input id="prenom"></p>
+<button class="btn" onclick="start()">Commencer</button>
+</div>
+
+<div id="quiz" style="display:none;">
+<h1>QCM -- Roches sédimentaires</h1>
+<form id="form"></form>
+<button class="btn" onclick="corriger()">Corriger</button>
+<div id="resultat"></div>
+<div id="explications"></div>
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"1) Qu'est-ce que l'érosion ?",
+indice:"Processus naturel qui détruit progressivement les roches à la surface.",
+choices:["Création des roches","Destruction des roches","Transport","Fusion"],
+answer:1,
+exp:"L'érosion détruit et altère les roches."
+},
+
+{
+q:"2) L'érosion mécanique signifie :",
+indice:"Elle agit sans changer la composition chimique de la roche.",
+choices:["Transformation chimique","Fragmentation physique","Fusion","Solidification"],
+answer:1,
+exp:"Elle casse la roche uniquement."
+},
+
+{
+q:"3) Agent de l'érosion :",
+indice:"Élément naturel capable de déplacer ou casser les roches.",
+choices:["Feu","Vent","Plastique","Métal"],
+answer:1,
+exp:"Le vent est un agent d'érosion."
+},
+
+{
+q:"4) L'eau de pluie est :",
+indice:"Elle contient du CO₂ dissous.",
+choices:["Basique","Neutre","Acide","Solide"],
+answer:2,
+exp:"Elle devient légèrement acide."
+},
+
+{
+q:"5) L'érosion chimique agit sur :",
+indice:"Roche sensible à la dissolution par l'eau acide.",
+choices:["Bois","Calcaire","Fer","Plastique"],
+answer:1,
+exp:"Le calcaire est dissous."
+},
+
+{
+q:"6) Le transport correspond à :",
+indice:"Étape après l'érosion où les matériaux changent de place.",
+choices:["Création","Déplacement","Fusion","Compression"],
+answer:1,
+exp:"Les sédiments sont déplacés."
+},
+
+{
+q:"7) Mode de transport :",
+indice:"Déplacement par petits bonds.",
+choices:["Fusion","Saltation","Combustion","Évaporation"],
+answer:1,
+exp:"Saltation = saut des particules."
+},
+
+{
+q:"8) Facteur du transport :",
+indice:"Élément qui influence la vitesse de déplacement.",
+choices:["Couleur","Force du vent","Odeur","Goût"],
+answer:1,
+exp:"Le vent influence le transport."
+},
+
+{
+q:"9) Morphoscopie étudie :",
+indice:"Observation scientifique des grains.",
+choices:["Température","Forme des grains","Couleur","Volume"],
+answer:1,
+exp:"Elle analyse leur forme."
+},
+
+{
+q:"10) Sédimentation signifie :",
+indice:"Moment où les particules cessent de bouger.",
+choices:["Transport","Dépôt","Fusion","Érosion"],
+answer:1,
+exp:"Les sédiments se déposent."
+},
+
+{
+q:"11) Les gros grains se déposent :",
+indice:"Ils sont plus lourds.",
+choices:["Après","Avant","Jamais","Au hasard"],
+answer:1,
+exp:"Ils tombent en premier."
+},
+
+{
+q:"12) Sédimentation chimique :",
+indice:"Résulte de la disparition de l'eau.",
+choices:["Fusion","Évaporation","Explosion","Refroidissement"],
+answer:1,
+exp:"Elle se fait par évaporation."
+},
+
+{
+q:"13) Exemple :",
+indice:"Substance issue d'un dépôt chimique.",
+choices:["Fer","Sel","Bois","Verre"],
+answer:1,
+exp:"Le sel est un exemple."
+},
+
+{
+q:"14) Sédimentation biochimique :",
+indice:"Provenant d'êtres vivants.",
+choices:["Machines","Animaux","Vent","Feu"],
+answer:1,
+exp:"Elle vient des organismes."
+},
+
+{
+q:"15) Diagenèse signifie :",
+indice:"Transformation lente après dépôt.",
+choices:["Transport","Transformation","Fusion","Érosion"],
+answer:1,
+exp:"Elle transforme les sédiments."
+},
+
+{
+q:"16) Compaction :",
+indice:"Effet du poids des couches.",
+choices:["Dilate","Compresse","Brûle","Refroidit"],
+answer:1,
+exp:"Elle compacte les sédiments."
+},
+
+{
+q:"17) Cimentation :",
+indice:"Processus qui lie les grains.",
+choices:["Dissout","Colle","Coupe","Brûle"],
+answer:1,
+exp:"Les minéraux collent les grains."
+},
+
+{
+q:"18) Sable → ?",
+indice:"Transformation après diagenèse.",
+choices:["Argile","Grès","Sel","Fer"],
+answer:1,
+exp:"Le sable devient grès."
+},
+
+{
+q:"19) Cycle des roches :",
+indice:"Phénomène qui se répète sans fin.",
+choices:["Fixe","Permanent","Unique","Court"],
+answer:1,
+exp:"C'est un cycle continu."
+},
+
+{
+q:"20) Étape finale :",
+indice:"Transformation en roche solide.",
+choices:["Transport","Diagenèse","Fusion","Évaporation"],
+answer:1,
+exp:"La diagenèse forme la roche."
+}
+
+];
+
+function start(){
+document.getElementById("pageGarde").style.display="none";
+document.getElementById("quiz").style.display="block";
+
+let form=document.getElementById("form");
+
+questions.forEach((q,i)=>{
+let html=`<fieldset>
+<strong>${q.q}</strong>
+<div class="indice">💡 ${q.indice}</div>`;
+
+q.choices.forEach((c,j)=>{
+html+=`<label><input type="radio" name="q${i}" value="${j}">${c}</label>`;
+});
+
+html+=`</fieldset>`;
+form.innerHTML+=html;
+});
+}
+
+function corriger(){
+let score=0;
+let exp=document.getElementById("explications");
+exp.innerHTML="";
+
+questions.forEach((q,i)=>{
+let choix=document.querySelector(`input[name="q${i}"]:checked`);
+let bloc=document.createElement("div");
+bloc.className="explain";
+
+if(choix && Number(choix.value)===q.answer){
+score++;
+bloc.innerHTML="✅ Bonne réponse<br>"+q.exp;
+}else{
+bloc.innerHTML="❌ Mauvaise réponse<br>Réponse : "+q.choices[q.answer]+"<br>"+q.exp;
+}
+
+exp.appendChild(bloc);
+});
+
+document.getElementById("resultat").innerHTML="Score : "+score+"/20";
+}
+
+</script>
+
+</body>
+</html>
